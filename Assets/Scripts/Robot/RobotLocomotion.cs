@@ -1,8 +1,11 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class RobotLocomotion : MonoBehaviour
 {
     public float moveSpeed = 3f;
+    public float rotateTime = 2f;
 
     [HideInInspector]
     public bool isWalking = true;
@@ -41,9 +44,29 @@ public class RobotLocomotion : MonoBehaviour
          // TODO
     }
 
-    public void StopMoving()
+    public delegate void OnStopComplete();
+
+    public void StopMoving(float point)
     {
-        isWalking = false;
+        if (!isWalking)
+        {
+            return;
+        }
+        StartCoroutine(StopMovingCoroutine(point));
+    }
+
+    public IEnumerator StopMovingCoroutine(float point)
+    {
+        if (isWalking)
+        {
+            int walkingDir = (int)Mathf.Sign(transform.forward.x);
+            while ((walkingDir > 0 && transform.position.x < point) ||
+                   (walkingDir < 0 && transform.position.x > point))
+            {
+                yield return null;
+            }
+            isWalking = false;
+        }
     }
 
     public void StartMoving()
