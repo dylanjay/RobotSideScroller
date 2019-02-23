@@ -10,7 +10,6 @@ public class RobotEventHandler : MonoBehaviour
     public float robotDetectionRayLength = 1.0f;
 
     public UnityEvent hitWall = new UnityEvent();
-    //public HitRobotEvent hitRobot = new HitRobotEvent();
 
     int frameCount = 0;
     Vector3 halfHeightVec;
@@ -35,8 +34,7 @@ public class RobotEventHandler : MonoBehaviour
 
         if (frameCount == rayDetectionFrameCount)
         {
-            //DetectWall();
-            //DetectRobot();
+            DetectWall();
             frameCount = 0;
         }
         frameCount++;
@@ -44,21 +42,9 @@ public class RobotEventHandler : MonoBehaviour
 
     void DetectWall()
     {
-        if (Physics2D.Raycast(transform.position + halfHeightVec, transform.forward, wallDetectionRayLength, LayerMask.GetMask("Terrain")))
+        if (Physics2D.Raycast(transform.position + halfHeightVec, robot.facing == Facing.Right ? transform.right : -transform.right, wallDetectionRayLength, LayerMask.GetMask("Terrain")))
         {
             hitWall.Invoke();
         }
     }
-
-    //void DetectRobot()
-    //{
-    //    RaycastHit hit = new RaycastHit();
-    //    if (Physics.Raycast(transform.position + halfHeightVec, transform.forward, out hit, robotDetectionRayLength, LayerMask.GetMask("Robot")))
-    //    {
-    //        if (hit.transform.GetComponent<Robot>().free)
-    //        {
-    //            hitRobot.Invoke(hit.transform.GetComponent<Robot>());
-    //        }
-    //    }
-    //}
 }

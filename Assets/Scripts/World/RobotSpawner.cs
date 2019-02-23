@@ -21,20 +21,14 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
 
     public void Spawn()
     {
-        if (!canSpawn)
+        if (!canSpawn || pool.size <= 0)
         {
             return;
         }
-
-        if (pool.size <= 0)
-        {
-            Debug.Log("Tried to spawn while pool is empty");
-            return;
-        }
-        // TODO : flip
         GameObject robot = pool.Extract();
+        robot.GetComponent<RobotRotator>().Face(facing);
         robot.SetActive(true);
-        robot.transform.position = transform.position - Vector3.up * yExtent;
+        robot.transform.position = transform.position - Vector3.up * yExtent + Vector3.back * 2;
         StartCoroutine(Cooldown());
     }
 

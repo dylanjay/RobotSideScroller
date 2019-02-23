@@ -6,6 +6,7 @@ public class RobotPool : MonoBehaviour
     List<GameObject> robots = new List<GameObject>();
 
     public int size;
+    public int gap;
 
     void Start()
     {
@@ -23,14 +24,6 @@ public class RobotPool : MonoBehaviour
             }
         }
         size = robots.Count;
-        for (int i = 0; i < robots.Count; i++)
-        {
-            if (robots[i].activeInHierarchy)
-            {
-                robots[i].SetActive(false);
-            }
-            robots[i].transform.SetParent(transform.parent);
-        }
     }
 
     public GameObject Extract()
@@ -43,7 +36,11 @@ public class RobotPool : MonoBehaviour
         GameObject robotToReturn = robots[size - 1];
         robots.RemoveAt(size - 1);
         size--;
-        robotToReturn.SetActive(true);
+        robotToReturn.GetComponent<RobotLocomotion>().isWalking = true;
+        robotToReturn.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
+        robotToReturn.GetComponent<Robot>().free = true;
+        robotToReturn.transform.SetParent(transform.parent.parent);
+        robotToReturn.transform.localScale = Vector3.one;
         return robotToReturn;
     }
 
@@ -54,9 +51,13 @@ public class RobotPool : MonoBehaviour
             Debug.LogError("Tried to add non-robot object to pool");
             return;
         }
-        robot.transform.position = transform.position;
-        robot.SetActive(false);
         robots.Add(robot);
+        robot.GetComponent<RobotLocomotion>().isWalking = false;
+        robot.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+        robot.GetComponent<Robot>().free = false;
+        robot.transform.SetParent(transform);
+        robot.transform.localScale = Vector3.one;
+        robot.transform.position = transform.position + Vector3.right * (size * (gap + robot.GetComponent<BoxCollider2D>().size.x * robot.transform.localScale.x));
         size++;
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 [RequireComponent(typeof(RobotLocomotion))]
 public class RobotAnimationHandler : MonoBehaviour 
@@ -6,6 +7,8 @@ public class RobotAnimationHandler : MonoBehaviour
     Animator anim;
     RobotLocomotion locomotion;
     Robot robot;
+
+    public bool busy = false;
 
     void Awake()
     {
@@ -24,5 +27,23 @@ public class RobotAnimationHandler : MonoBehaviour
         {
             anim.SetFloat("WalkSpeed", 0f);
         }
+    }
+
+    public void Punch(float duration)
+    {
+        StartCoroutine(PunchCoroutine(duration));
+    }
+
+    IEnumerator PunchCoroutine(float duration)
+    {
+        busy = true;
+        anim.SetBool("Punch", true);
+        yield return new WaitForSeconds(duration);
+        anim.SetBool("Punch", false);
+    }
+
+    public void Jump()
+    {
+        anim.SetTrigger("Jump");
     }
 }

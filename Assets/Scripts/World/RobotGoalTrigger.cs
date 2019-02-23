@@ -19,7 +19,7 @@ public class RobotGoalTrigger : RobotStopTrigger
     {
         if (robot.GetComponent<Robot>().free)
         {
-            robot.transform.position = robot.transform.position + Vector3.forward * 2;
+            robot.transform.position = robot.transform.position + Vector3.forward * 4;
             yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
             yield return robot.GetComponent<RobotRotator>().RotateToOverCoroutine(Vector3.back, 2f);
             goalManager.GoalIncrement();

@@ -7,6 +7,7 @@ public class RobotRotator : MonoBehaviour
     public bool isRotating = false;
 
     Transform pivot;
+    Robot robot;
 
     void Awake()
     {
@@ -15,6 +16,7 @@ public class RobotRotator : MonoBehaviour
         {
             Debug.LogError("Pivot is null in robot rotator");
         }
+        robot = GetComponent<Robot>();
     }
 
     public void RotateToOver(Vector3 goal, float length)
@@ -29,13 +31,14 @@ public class RobotRotator : MonoBehaviour
 
     public void Face(Facing facing)
     {
+        robot.facing = facing;
         switch (facing)
         {
             case Facing.Left:
-                transform.rotation = Quaternion.LookRotation(Vector3.left, Vector3.up);
+                pivot.rotation = Quaternion.LookRotation(Vector3.left, Vector3.up);
                 break;
             case Facing.Right:
-                transform.rotation = Quaternion.LookRotation(Vector3.right, Vector3.up);
+                pivot.rotation = Quaternion.LookRotation(Vector3.right, Vector3.up);
                 break;
         }
     }

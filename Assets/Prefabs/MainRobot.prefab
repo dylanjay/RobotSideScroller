@@ -36,11 +36,6 @@ PrefabInstance:
       propertyPath: m_TagString
       value: MainRobot
       objectReference: {fileID: 0}
-    - target: {fileID: 5660402031820015868, guid: 134aa53e861dbcb4c8d6c622fd387197,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 9104250408536402682, guid: 134aa53e861dbcb4c8d6c622fd387197,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -54,7 +49,7 @@ PrefabInstance:
     - target: {fileID: 9104250408536402682, guid: 134aa53e861dbcb4c8d6c622fd387197,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 9104250408536402682, guid: 134aa53e861dbcb4c8d6c622fd387197,
         type: 3}
@@ -95,6 +90,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383367045297699864, guid: 134aa53e861dbcb4c8d6c622fd387197,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383367045297699864, guid: 134aa53e861dbcb4c8d6c622fd387197,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 1383367045297699864, guid: 134aa53e861dbcb4c8d6c622fd387197,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 1516617810662213348, guid: 134aa53e861dbcb4c8d6c622fd387197,
         type: 3}
@@ -291,10 +301,10 @@ PrefabInstance:
       propertyPath: m_RootBone
       value: 
       objectReference: {fileID: 9139535803299008518}
-    - target: {fileID: 7906158940188017747, guid: 134aa53e861dbcb4c8d6c622fd387197,
+    - target: {fileID: 5660402031820015869, guid: 134aa53e861dbcb4c8d6c622fd387197,
         type: 3}
-      propertyPath: isWalking
-      value: 0
+      propertyPath: platformMask.m_Bits
+      value: 257
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 112905586253036016, guid: 134aa53e861dbcb4c8d6c622fd387197, type: 3}

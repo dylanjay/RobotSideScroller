@@ -14,6 +14,7 @@ public class RobotStopTrigger : MonoBehaviour
         {
             filled = true;
             filledRobot = other.GetComponent<Robot>();
+            filledRobot.GetComponent<RobotActivator>().Deactivate();
             StartCoroutine(StopCoroutine(filledRobot));
         }
     }
@@ -21,19 +22,18 @@ public class RobotStopTrigger : MonoBehaviour
     IEnumerator StopCoroutine(Robot robot)
     {
         yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
-        robot.GetComponent<RobotActivator>().Deactivate();
     }
 
-    void OnTriggerExit(Collider other)
-    {
-        if (filled && other.tag == "Robot" && other.GetComponent<Robot>() == filledRobot && other.GetComponent<Robot>().free)
-        {
-            filled = false;
-            filledRobot = null;
-        }
-    }
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if (filled && other.tag == "Robot" && other.GetComponent<Robot>() == filledRobot && other.GetComponent<Robot>().free)
+    //    {
+    //        filled = false;
+    //        filledRobot = null;
+    //    }
+    //}
 
-    public void Release()
+    public virtual void Release()
     {
         filledRobot.GetComponent<RobotLocomotion>().StartMoving();
         filledRobot.GetComponent<RobotActivator>().Activate();

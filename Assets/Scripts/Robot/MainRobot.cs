@@ -9,6 +9,9 @@
 
     public void Begin()
     {
-        locomotion.StartMoving();
+        if (GetComponent<Robot>().free && !locomotion.isWalking)
+        {
+            locomotion.StartMoving();
+        }
     }
 }
