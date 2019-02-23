@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 public class RobotStackStation : RobotStopTrigger, ILeftClickable
 {
-    public void OnClick()
+    public void OnLeftClick()
     {
         Release();
     }

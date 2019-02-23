@@ -6,9 +6,15 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
     bool canSpawn = true;
     Facing facing = Facing.Right;
     float yExtent;
+    SpriteOutline outline;
 
     public RobotPool pool;
     public float cooldown = 1.0f;
+
+    void Awake()
+    {
+        outline = GetComponent<SpriteOutline>();
+    }
 
     void Start()
     {
@@ -51,8 +57,21 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
         canSpawn = true;
     }
 
-    public void OnClick()
+    public void OnLeftClick()
     {
         Spawn();
+    }
+
+    void OnMouseEnter()
+    {
+        if (canSpawn && pool.size > 0)
+        {
+            outline.outlineOn = true;
+        }
+    }
+    
+    void OnMouseExit()
+    {
+        outline.outlineOn = false;
     }
 }

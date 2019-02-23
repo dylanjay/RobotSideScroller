@@ -8,7 +8,20 @@ public class LevelLoader : MonoBehaviour
         LoadNextLevel();
     }
 
-    public void LoadNextLevel()
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F12))
+        {
+            ReloadGame();
+        }
+    }
+
+    public static void ReloadGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public static void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }

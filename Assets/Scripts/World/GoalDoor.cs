@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class GoalDoor : RobotStopTrigger
 {
-    bool open = false;
+    public bool open = false;
     SpriteRenderer spriteRenderer;
+    SpriteRenderer stripesRenderer;
 
     public Sprite openSprite;
     public Sprite closedSprite;
@@ -12,23 +13,34 @@ public class GoalDoor : RobotStopTrigger
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        stripesRenderer = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if (open)
+        {
+            Open();
+        }
+        else
+        {
+            Close();
+        }
     }
 
     public void Open()
     {
         open = true;
         spriteRenderer.sprite = openSprite;
+        stripesRenderer.enabled = false;
     }
 
     public void Close()
     {
         open = false;
         spriteRenderer.sprite = closedSprite;
+        stripesRenderer.enabled = true;
     }
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (open && other.tag == "MainRobot")
+        if (open && other.tag == "MainRobot" && other.GetComponent<Robot>().free)
         {
             StartCoroutine(GoalSequence(other.gameObject));
         }

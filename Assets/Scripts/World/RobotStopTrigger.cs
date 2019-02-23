@@ -10,7 +10,7 @@ public class RobotStopTrigger : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
-        if (!filled && other.tag == "Robot")
+        if (!filled && (other.tag == "Robot" || other.tag == "MainRobot"))
         {
             filled = true;
             filledRobot = other.GetComponent<Robot>();
@@ -19,7 +19,7 @@ public class RobotStopTrigger : MonoBehaviour
         }
     }
 
-    IEnumerator StopCoroutine(Robot robot)
+    protected virtual IEnumerator StopCoroutine(Robot robot)
     {
         yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
     }

@@ -16,8 +16,8 @@ TagManager:
   - 
   - 
   - Terrain
-  - LeftClickable
-  - RightClickable
+  - Clickable
+  - 
   - Robot
   - Trigger
   - MainRobot

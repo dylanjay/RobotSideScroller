@@ -1,4 +1,4 @@
 ﻿public interface ILeftClickable 
 {
-    void OnClick();
+    void OnLeftClick();
 }

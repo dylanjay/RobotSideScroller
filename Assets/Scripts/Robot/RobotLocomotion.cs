@@ -20,15 +20,6 @@ public class RobotLocomotion : MonoBehaviour
     void Update()
     {
         Walk();
-
-        //if (cc.isGrounded)
-        //{
-        //    Walk();
-        //}
-        //else
-        //{
-        //    Jump();
-        //}
     }
 
     void Walk()
@@ -37,6 +28,7 @@ public class RobotLocomotion : MonoBehaviour
         {
             Vector3 moveDir = transform.right;
             if (robot.facing == Facing.Left) { moveDir = -transform.right; }
+            moveDir += Vector3.up * Physics2D.gravity.y;
             cc.move(moveDir * moveSpeed * Time.deltaTime);
         }
     }

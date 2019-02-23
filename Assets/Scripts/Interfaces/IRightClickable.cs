@@ -1,4 +1,4 @@
 ﻿public interface IRightClickable 
 {
-    void OnClick();
+    void OnRightClick();
 }
