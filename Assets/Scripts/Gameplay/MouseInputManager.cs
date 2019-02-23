@@ -2,7 +2,12 @@
 
 public class MouseInputManager : MonoBehaviour
 {
-    public Camera cam;
+    Camera cam;
+
+    void Awake()
+    {
+        cam = GetComponent<Camera>();
+    }
 
     void Start()
     {
@@ -17,7 +22,7 @@ public class MouseInputManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray, float.PositiveInfinity, LayerMask.GetMask("LeftClickable"));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, float.PositiveInfinity, LayerMask.GetMask("LeftClickable"));
             for (int i = 0; i < hits.Length; i++)
             {
                 hits[i].transform.GetComponent<ILeftClickable>().OnClick();
@@ -26,7 +31,7 @@ public class MouseInputManager : MonoBehaviour
         else if (Input.GetMouseButtonDown(1))
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray, float.PositiveInfinity, LayerMask.GetMask("RightClickable"));
+            RaycastHit2D[] hits = Physics2D.RaycastAll(ray.origin, ray.direction, float.PositiveInfinity, LayerMask.GetMask("RightClickable"));
             for (int i = 0; i < hits.Length; i++)
             {
                 hits[i].transform.GetComponent<IRightClickable>().OnClick();

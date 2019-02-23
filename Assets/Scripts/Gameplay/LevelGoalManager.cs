@@ -3,17 +3,23 @@
 public class LevelGoalManager : MonoBehaviour 
 {
     public int goalsNeeded = 1;
-
+    public GoalDoor door;
     int curGoals = 0;
+
+    void Start()
+    {
+        if (door == null)
+        {
+            Debug.LogError("Door is null in LevelGoalManager");
+        }
+    }
 
     public void GoalIncrement()
     {
         curGoals++;
-
         if (curGoals >= goalsNeeded)
         {
-            //TODO progress to next level
-            Debug.Log("Goal Complete!");
+            door.Open();
         }
     }
 

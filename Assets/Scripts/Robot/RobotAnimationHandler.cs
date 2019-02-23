@@ -5,10 +5,12 @@ public class RobotAnimationHandler : MonoBehaviour
 {
     Animator anim;
     RobotLocomotion locomotion;
+    Robot robot;
 
     void Awake()
     {
-        anim = GetComponent<Animator>();
+        anim = GetComponentInChildren<Animator>();
+        robot = GetComponent<Robot>();
         locomotion = GetComponent<RobotLocomotion>();
     }
 

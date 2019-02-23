@@ -1,27 +1,26 @@
 ﻿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Robot))]
 [RequireComponent(typeof(RobotRotator))]
 public class RobotActivator : MonoBehaviour 
 {
-    public float transitionLength = 2f;
+    Robot robot;
+    CharacterController controller;
 
-    bool isActive = true;
-
-	public void Deactivate()
+    void Awake()
     {
-        if (!isActive)
-        {
-            return;
-        }
-        GetComponent<RobotRotator>().RotateToOver(Vector3.back, 2f);
+        robot = GetComponent<Robot>();
+        controller = GetComponent<CharacterController>();
     }
 
-    public IEnumerator DeactivateCoroutine()
+    public void Activate()
     {
-        if (isActive)
-        {
-            yield return GetComponent<RobotRotator>().RotateToOverCoroutine(Vector3.back, 2f);
-        }
+        robot.free = true;
+    }
+
+    public void Deactivate()
+    {
+        robot.free = false;
     }
 }

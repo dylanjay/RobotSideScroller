@@ -1,38 +1,28 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider))]
 public class RobotGoalTrigger : RobotStopTrigger
 {
     public LevelGoalManager goalManager;
 
-    //BoxCollider boxCollider;
-
-    //void Awake()
-    //{
-    //    boxCollider = GetComponent<BoxCollider>();
-    //}
-
-    void OnTriggerEnter(Collider other)
+    protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (!filled && other.tag == "Robot")
+        if (!filled && other.tag == "Robot" && other.GetComponent<Robot>().free)
         {
             StartCoroutine(GoalSequence(other.gameObject));
             filled = true;
+            filledRobot = other.GetComponent<Robot>();
         }
     }
 
     IEnumerator GoalSequence(GameObject robot)
     {
-        yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
-        yield return robot.GetComponent<RobotActivator>().DeactivateCoroutine();
-        goalManager.GoalIncrement();
+        if (robot.GetComponent<Robot>().free)
+        {
+            robot.transform.position = robot.transform.position + Vector3.forward * 2;
+            yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
+            yield return robot.GetComponent<RobotRotator>().RotateToOverCoroutine(Vector3.back, 2f);
+            goalManager.GoalIncrement();
+        }
     }
-    
-
-    //void OnDrawGizmosSelected()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawCube(transform.position + boxCollider.center, boxCollider.size);
-    //}
 }

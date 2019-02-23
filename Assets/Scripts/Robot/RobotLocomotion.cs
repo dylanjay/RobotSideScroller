@@ -4,17 +4,17 @@ using UnityEngine.Events;
 
 public class RobotLocomotion : MonoBehaviour
 {
+    CharacterController2D cc;
+    Robot robot;
+
     public float moveSpeed = 3f;
     public float rotateTime = 2f;
-
-    [HideInInspector]
     public bool isWalking = true;
-
-    CharacterController cc;
 
     void Awake()
     {
-        cc = GetComponent<CharacterController>();
+        cc = GetComponent<CharacterController2D>();
+        robot = GetComponent<Robot>();
     }
 
     void Update()
@@ -35,7 +35,9 @@ public class RobotLocomotion : MonoBehaviour
     {
         if (isWalking)
         {
-            cc.SimpleMove(transform.forward * moveSpeed);
+            Vector3 moveDir = transform.right;
+            if (robot.facing == Facing.Left) { moveDir = -transform.right; }
+            cc.move(moveDir * moveSpeed * Time.deltaTime);
         }
     }
 
@@ -57,11 +59,11 @@ public class RobotLocomotion : MonoBehaviour
 
     public IEnumerator StopMovingCoroutine(float point)
     {
+        robot.free = false;
         if (isWalking)
         {
-            int walkingDir = (int)Mathf.Sign(transform.forward.x);
-            while ((walkingDir > 0 && transform.position.x < point) ||
-                   (walkingDir < 0 && transform.position.x > point))
+            while ((robot.facing == Facing.Right && transform.position.x < point) ||
+                   (robot.facing == Facing.Left && transform.position.x > point))
             {
                 yield return null;
             }
