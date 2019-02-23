@@ -5,7 +5,12 @@ public class LevelLoader : MonoBehaviour
 {
     void Start()
     {
-        LoadNextLevel();
+        Debug.Log("Controls:");
+        Debug.Log("WASD - Pan Camera");
+        Debug.Log("Left Click - Interact");
+        Debug.Log("Right Click - Interact (Secondary)");
+        Debug.Log("R - Reset Level");
+        Debug.Log("F12 - Reset Game");
     }
 
     void Update()
@@ -24,5 +29,10 @@ public class LevelLoader : MonoBehaviour
     public static void LoadNextLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void LoadNextLevelManual()
+    {
+        LoadNextLevel();
     }
 }

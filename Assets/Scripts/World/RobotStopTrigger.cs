@@ -8,6 +8,8 @@ public class RobotStopTrigger : MonoBehaviour
 
     protected Robot filledRobot;
 
+    public float cooldown = 3f;
+
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (!filled && (other.tag == "Robot" || other.tag == "MainRobot"))
@@ -24,18 +26,17 @@ public class RobotStopTrigger : MonoBehaviour
         yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
     }
 
-    //void OnTriggerExit(Collider other)
-    //{
-    //    if (filled && other.tag == "Robot" && other.GetComponent<Robot>() == filledRobot && other.GetComponent<Robot>().free)
-    //    {
-    //        filled = false;
-    //        filledRobot = null;
-    //    }
-    //}
-
     public virtual void Release()
     {
         filledRobot.GetComponent<RobotLocomotion>().StartMoving();
         filledRobot.GetComponent<RobotActivator>().Activate();
+        StartCoroutine(Cooldown());
+    }
+
+    IEnumerator Cooldown()
+    {
+        yield return new WaitForSeconds(cooldown);
+        filled = false;
+        filledRobot = null;
     }
 }

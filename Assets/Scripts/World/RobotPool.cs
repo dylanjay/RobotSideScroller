@@ -20,7 +20,7 @@ public class RobotPool : MonoBehaviour
             Transform child = transform.GetChild(i);
             if (child.tag == "Robot")
             {
-                robots.Add(child.gameObject);
+                Release(child.gameObject);
             }
         }
         size = robots.Count;

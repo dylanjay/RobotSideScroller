@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 5810936274177036750}
   - component: {fileID: 2668185403149891214}
   - component: {fileID: 5863857690184106834}
+  - component: {fileID: 1980185527}
   m_Layer: 12
   m_Name: RobotBox
   m_TagString: Untagged
@@ -182,5 +183,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   filled: 0
-  leftStop: {fileID: 0}
-  rightStop: {fileID: 0}
+  cooldown: 3
+  index: 0
+  hiddenRobot: {fileID: 0}
+  pool: {fileID: 0}
+  leftStop: {fileID: 403836948}
+  rightStop: {fileID: 89979222}
+  timer: 3
+  punchFrontPad: 1
+--- !u!114 &1980185527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5863857690184106833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 290d5bf9f5753c545a2fb545722c6f97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAngle: 30
+  stress: 0.5
+  traumaDecay: 0.25
+  stressInterval: 8

@@ -39,9 +39,10 @@ public class CollapsableFloor : MonoBehaviour
             case State.Top:
                 set = true;
                 top.position = topReset;
+                top.rotation = Quaternion.identity;
                 top.gameObject.SetActive(true);
                 bot.gameObject.SetActive(false);
-                top.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                top.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                 break;
             case State.Mid:
                 top.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;

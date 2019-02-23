@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 public class RobotButton : RobotStopTrigger, ILeftClickable, IRightClickable
 {
     SpriteOutline outline;
+    bool canPress = false;
 
+    public Facing facing = Facing.Right;
     public UnityEvent onPress;
 
     void Awake()
@@ -14,14 +17,21 @@ public class RobotButton : RobotStopTrigger, ILeftClickable, IRightClickable
 
     protected override void OnTriggerEnter2D(Collider2D other)
     {
-        if (!filled && (other.tag == "Robot" || other.tag == "MainRobot"))
+        if (!filled && (other.tag == "Robot" || other.tag == "MainRobot") && other.GetComponent<Robot>().free)
         {
             other.transform.position += Vector3.forward * 4;
             filled = true;
             filledRobot = other.GetComponent<Robot>();
             filledRobot.GetComponent<RobotActivator>().Deactivate();
             StartCoroutine(StopCoroutine(filledRobot));
+            canPress = true;
         }
+    }
+
+    protected override IEnumerator StopCoroutine(Robot robot)
+    {
+        yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
+        robot.GetComponent<RobotRotator>().Face(facing);
     }
 
     public void OnLeftClick()
@@ -31,7 +41,7 @@ public class RobotButton : RobotStopTrigger, ILeftClickable, IRightClickable
    
     public void Press()
     {
-        if (onPress != null && filled)
+        if (onPress != null && filled && canPress)
         {
             onPress.Invoke();
         }
@@ -39,7 +49,7 @@ public class RobotButton : RobotStopTrigger, ILeftClickable, IRightClickable
 
     void OnMouseEnter()
     {
-        if (filled)
+        if (filled && canPress)
         {
             outline.outlineOn = true;
         }
@@ -54,5 +64,6 @@ public class RobotButton : RobotStopTrigger, ILeftClickable, IRightClickable
     {
         filledRobot.transform.position += Vector3.back * 4;
         Release();
+        canPress = false;
     }
 }

@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RobotSpawner : MonoBehaviour, ILeftClickable
+public class RobotSpawner : MonoBehaviour, ILeftClickable, IRightClickable
 {
     bool canSpawn = true;
-    Facing facing = Facing.Right;
+    public Facing facing = Facing.Right;
     float yExtent;
     SpriteOutline outline;
+    SpriteRenderer facingSprite;
 
     public RobotPool pool;
     public float cooldown = 1.0f;
@@ -14,13 +15,18 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
     void Awake()
     {
         outline = GetComponent<SpriteOutline>();
+        facingSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        if (facing == Facing.Left)
+        {
+            facingSprite.flipX = !facingSprite.flipX;
+        }
     }
 
     void Start()
     {
         if (pool == null)
         {
-            Debug.LogError("Robot bool is null in spawner");
+            Debug.LogError("Robot pool is null in spawner");
         }
         yExtent = GetComponent<BoxCollider2D>().size.y / 2 * transform.localScale.y;
     }
@@ -48,6 +54,7 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
         {
             facing = Facing.Right;
         }
+        facingSprite.flipX = !facingSprite.flipX;
     }
 
     IEnumerator Cooldown()
@@ -64,14 +71,24 @@ public class RobotSpawner : MonoBehaviour, ILeftClickable
 
     void OnMouseEnter()
     {
+        outline.outlineOn = true;
         if (canSpawn && pool.size > 0)
         {
-            outline.outlineOn = true;
+            outline.color = Color.green;
+        }
+        else
+        {
+            outline.color = Color.blue;
         }
     }
     
     void OnMouseExit()
     {
         outline.outlineOn = false;
+    }
+
+    public void OnRightClick()
+    {
+        Flip();
     }
 }

@@ -17,6 +17,11 @@ public class RobotLocomotion : MonoBehaviour
         robot = GetComponent<Robot>();
     }
 
+    void Start()
+    {
+        cc.move(Vector3.up * Physics2D.gravity.y * moveSpeed * Time.deltaTime);
+    }
+
     void Update()
     {
         Walk();
@@ -37,8 +42,6 @@ public class RobotLocomotion : MonoBehaviour
     {
          // TODO
     }
-
-    public delegate void OnStopComplete();
 
     public void StopMoving(float point)
     {

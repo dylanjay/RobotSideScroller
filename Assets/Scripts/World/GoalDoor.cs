@@ -52,8 +52,7 @@ public class GoalDoor : RobotStopTrigger
         {
             yield return robot.GetComponent<RobotLocomotion>().StopMovingCoroutine(transform.position.x);
             yield return robot.GetComponent<RobotRotator>().RotateToOverCoroutine(Vector3.forward, 2f);
-            //TODO : Transition to next level
-            Debug.Log("LEVEL COMPLETE");
+            LevelLoader.LoadNextLevel();
         }
     }
 }

@@ -691,6 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d8f8508122b57349b4b27aa02a6eaed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  busy: 0
 --- !u!114 &1898329446725293708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +787,7 @@ MonoBehaviour:
   _skinWidth: 0.02
   platformMask:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 257
   triggerMask:
     serializedVersion: 2
     m_Bits: 4096
